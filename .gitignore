@@ -1,0 +1,5 @@
+# Ignore node_modules trong project con
+node_modules/
+
+# Ignore file .env trong project con
+.env

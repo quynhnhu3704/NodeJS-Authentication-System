@@ -1,24 +1,27 @@
+//update lan 2:
 import User from "../models/userModel.js"; // Importing the User model
+import bcrypt from "bcrypt"; // ✅ Thêm để hash password
 
 // Controller class for handling Google Sign In
-export  class googleSignInController {
+export class googleSignInController {
  
     // Method to handle successful Google sign-in
     signInSuccess = async (req, res) => {
         // Extracting user data from the request object
-        const userData =  req.user._json;
+        const userData = req.user._json;
         const { email, name, sub } = userData;
 
         if (email) {
             // Attempting to find existing user in the database
-            const user = await User.findOne({email:email});
+            const user = await User.findOne({ email: email });
             if (user) {
                 // If user exists, set user's email in session and render homepage
                 req.session.userEmail = email;
                 return res.status(200).render("homepage"); // Render homepage view
             }
             // If user does not exist, create a new user in the database
-            const newUser = new User({username:name, email:email, password:sub});
+            const hashedSub = await bcrypt.hash(sub, 10); // ✅ Hash sub để nhất quán với password normal
+            const newUser = new User({ username: name, email: email, password: hashedSub });
             await newUser.save();  // Saving the new user to the database
             // Set user's email in session and render homepage
             req.session.userEmail = email;

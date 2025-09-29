@@ -1,108 +1,190 @@
 # Node.js Authentication System
 
-This project contains a complete authentication system using Node.js, Express, and MongoDB. It includes features like sign up, sign in, sign out, password reset, and social authentication (Google). The project is structured to be scalable with separate components for models, controllers, and routes.
+This project contains a complete authentication system using Node.js, Express, Passport.js, and MongoDB.
+Nó hỗ trợ đầy đủ các tính năng: đăng ký, đăng nhập, đăng xuất, đổi mật khẩu, quên mật khẩu, và đăng nhập bằng Google.
+
+---
 
 ## Live Site
-[Click here](https://nodejs-authentication-system-l2pu.onrender.com/user/signin) to visit the live site.
+
+Chạy thử trực tiếp: `http://localhost:3000/user/signin`
+
+---
 
 ## Features Implemented
-- **Sign-up with Email**: Create an account using your email and password.
-- **Sign-in**: Log into your account securely.
-- **Sign Out**: Log out of your session.
-- **Reset Password**: You can reset your passwords after signing in.
-- **Encrypted Passwords**: Passwords are securely stored using encryption.
-- **Google Login/Signup**: Sign in or sign up using your Google account.
-- **Forgot Password**: Reset your password via email.
-- **Password Strength Validation**: Notifications are displayed for unmatching passwords during sign up and incorrect passwords during sign in.
-- **reCAPTCHA Integration**: Protects against bot traffic on sign up and login pages.
+
+* **Sign-up với Email**: Tạo tài khoản với email và mật khẩu.
+* **Sign-in**: Đăng nhập tài khoản.
+* **Sign-out**: Đăng xuất tài khoản.
+* **Reset Password**: Đổi mật khẩu sau khi đăng nhập.
+* **Forgot Password**: Lấy lại mật khẩu qua email.
+* **Google Authentication**: Đăng nhập / đăng ký bằng Google.
+* **Encrypted Passwords**: Lưu mật khẩu dưới dạng mã hóa.
+* **Password Strength Validation**: Kiểm tra và báo lỗi nếu mật khẩu sai.
+* **reCAPTCHA**: Chống bot khi đăng ký và đăng nhập.
+
+---
 
 ## Environment Variables
 
-Before running the application locally, ensure you have set up the following environment variables in a .env file located at the root of your project:
-
-1. **PORT**: Specifies the port number the application listens on.
-2. **DB_URL**: MongoDB database connection URL.
-3. **CLIENT_ID**: Google OAuth client ID.
-4. **CLIENT_SECRET**: Google OAuth client secret (sign in with Google).
-5. **EMAIL**: Email address for sending emails.
-6. **PASSWORD**: App-specific password or regular password for the Gmail account.
-7. **RECAPTCHA_SECRET_KEY**: Google reCAPTCHA secret key.
-8. **CLIENT_URL**: URL to redirect after signing in with Google, e.g., "http://localhost:3000/auth/login/success".
-
-Ensure that you have the appropriate values for each variable before running the application.
-
-Example `.env` file:
+Tạo file `.env` ở thư mục gốc, ví dụ:
 
 ```plaintext
 PORT=3000
 DB_URL=mongodb://localhost:27017/authdatabase
-CLIENT_ID=your_client_id
-CLIENT_SECRET=your_client_secret
+
+# Google OAuth
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+GOOGLE_CALLBACK_URL=http://localhost:3000/auth/google/callback
+
+# Gmail
 EMAIL=your_email@gmail.com
-PASSWORD=your_gmail_password
+PASSWORD=your_app_password
+
+# reCAPTCHA
 RECAPTCHA_SECRET_KEY=your_recaptcha_secret_key
+RECAPTCHA_SITE_KEY=your_recaptcha_site_key
+
+# Redirect URL
 CLIENT_URL=http://localhost:3000/auth/login/success
+
+# Secrets
+SESSION_SECRET=your_session_secret
+JWT_SECRET=your_jwt_secret
 ```
 
-## Folder
-  ```csharp
-node-authentication/
-├── config/                  # Configuration files
-│   └── mongodb.js           # MongoDB configuration
-│
-├── controllers/             # Controller logic
-├── models/                  # Database models
-├── routes/                  # Route definitions
-├── views/                   # EJS views
-├── app.js                   # Express application setup
-│
+⚠️ Lưu ý: **Không commit file `.env` lên GitHub** vì chứa thông tin bí mật.
+
+---
+
+## Folder Structure
+
+```csharp
+NodeJS-Authentication-System/
+├── config/                  # Cấu hình MongoDB, Passport
+├── controllers/             # Business logic
+├── models/                  # Database models (User, Token)
+├── routes/                  # Routes (auth, user, password)
+├── views/                   # Views EJS
 ├── public/                  # Static assets
-│
-├── package.json             # NPM package configuration
-├── README.md                # Project README file
-├── .gitignore               # Git ignore configuration
-└── .env                     # Environment variables file
-
+│   └── results/             # Ảnh minh họa
+├── app.js                   # Express app
+├── package.json             # Config npm
+├── .env                     # Environment variables
+└── README.md
 ```
+
+---
 
 ## Installation and Setup
 
-Follow these steps to run the project locally:
-
-
-1. Clone the repository to your local machine:
+1. Clone repo:
 
    ```bash
-   git clone https://github.com/your-username/nodejs-authentication-system.git
-  
-2. Navigate into the project directory:
-   ```bash
-   cd node-authentication-system
-    ```
-3. Install dependencies:
+   git clone https://github.com/your-username/NodeJS-Authentication-System.git
+   cd NodeJS-Authentication-System
+   ```
+
+2. Cài đặt dependencies:
+
    ```bash
    npm install
+   ```
 
-4. Start the server:
+3. Chạy server:
+
    ```bash
    npm start
-5. Open your web browser and visit http://localhost:3000 to access the application.
+   ```
 
-## Dependencies required
+4. Truy cập:
 
-- Express.js
-- MongoDB
-- Passport.js
-- bcrypt
-- express-session
-- express-ejs-layouts
-- dotenv
-- nodemailer
+   ```
+   http://localhost:3000
+   ```
 
-## Credits
+---
 
-This project was created by [Ravikant Singh](https://github.com/ravikantsingh12). Contributions via issues or pull requests are welcome!
+## Dependencies Required
 
-## Follow me on
+* express
+* mongoose
+* passport
+* bcryptjs
+* express-session
+* ejs
+* dotenv
+* nodemailer
+* google-auth-library
+* recaptcha
 
-- [LinkedIn](https://www.linkedin.com/in/ravikant-singh-327a98241)
+---
+
+## Hình minh họa
+
+### Homepage
+
+![Homepage](public/results/homepage.png)
+
+---
+
+### Sign Up
+
+![Sign Up](public/results/signup.png)
+*Form đăng ký*
+
+![Sign Up Success](public/results/signup_success.png)
+*Đăng ký thành công*
+
+![MongoDB Users](public/results/signup_mongo_users.png)
+*User được lưu trong MongoDB*
+
+---
+
+### Sign In
+
+![Sign In](public/results/signin.png)
+*Form đăng nhập*
+
+![Sign Out](public/results/signout.png)
+*Đăng xuất thành công*
+
+---
+
+### Google Sign In
+
+![Google Sign In](public/results/signin_with_Google.png)
+*Form đăng nhập với Google*
+
+![Google Sign In Success](public/results/signin_with_Google_success.png)
+*Đăng nhập Google thành công*
+
+---
+
+### Change Password
+
+![Change Password](public/results/change_password.png)
+*Form đổi mật khẩu*
+
+![Change Password Success](public/results/change_password_success.png)
+*Đổi mật khẩu thành công*
+
+![Change Password MongoDB](public/results/change_password_mongo.png)
+*Mật khẩu đã được cập nhật trong MongoDB*
+
+---
+
+### Forgot Password
+
+![Forgot Password](public/results/forgot_password.png)
+*Form quên mật khẩu*
+
+![Forgot Password Gmail](public/results/forgot_password_gmail.png)
+*Gửi link reset qua Gmail*
+
+![Forgot Password Success](public/results/forgot_password_success.png)
+*Reset mật khẩu thành công*
+
+![Forgot Password MongoDB](public/results/forgot_password_mongo.png)
+*MongoDB cập nhật mật khẩu mới*
