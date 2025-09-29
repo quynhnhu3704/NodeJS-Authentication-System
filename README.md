@@ -180,11 +180,11 @@ NodeJS-Authentication-System/
 ![Forgot Password](public/results/forgot_password.png)
 *Form quên mật khẩu*
 
-![Forgot Password Gmail](public/results/forgot_password_gmail.png)
-*Gửi link reset qua Gmail*
-
 ![Forgot Password Success](public/results/forgot_password_success.png)
-*Reset mật khẩu thành công*
+*Gửi mật khẩu mới qua Gmail thành công*
+
+![Forgot Password Gmail](public/results/forgot_password_gmail.png)
+*Xem mật khẩu mới trong Gmail*
 
 ![Forgot Password MongoDB](public/results/forgot_password_mongo.png)
 *MongoDB cập nhật mật khẩu mới*
